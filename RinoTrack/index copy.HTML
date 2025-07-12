@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Registro | Entradas y Salidas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: #1a2a6c;
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo-icon {
+            background: white;
+            color: #1a2a6c;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        main {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            border-color: #1a2a6c;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 42, 108, 0.2);
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .btn-entrada {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-salida {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-entrada:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-salida:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .status {
+            background: #f8f9fa;
+            border-left: 4px solid #1a2a6c;
+            padding: 15px;
+            margin-top: 25px;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .status.active {
+            display: block;
+        }
+        
+        .status p {
+            font-size: 14px;
+            color: #333;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .admin-login {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .admin-login a {
+            color: #1a2a6c;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .admin-login a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 480px) {
+            .buttons {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">R</div>
+                <div>
+                    <h1>Registro de Asistencia</h1>
+                    <div class="subtitle">Sistema de Entradas y Salidas</div>
+                </div>
+            </div>
+        </header>
+        
+        <main>
+            <form id="registro-form">
+                <div class="form-group">
+                    <label for="numero-control">Número de Control:</label>
+                    <input type="text" id="numero-control" placeholder="Ingrese su número de control" required>
+                </div>
+                
+                <div class="buttons">
+                    <button type="button" class="btn btn-entrada">Registrar Entrada</button>
+                    <button type="button" class="btn btn-salida">Registrar Salida</button>
+                </div>
+                
+                <div class="status" id="status-message">
+                    <p>Registro exitoso: Entrada registrada a las 08:45:23 AM</p>
+                </div>
+            </form>
+            
+            <div class="admin-login">
+                <a href="#">Acceso para Administradores</a>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Sistema de Registro de Entradas y Salidas &copy; 2023</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simulación básica de funcionalidad para demostración
+        document.addEventListener('DOMContentLoaded', function() {
+            const entradaBtn = document.querySelector('.btn-entrada');
+            const salidaBtn = document.querySelector('.btn-salida');
+            const statusMessage = document.getElementById('status-message');
+            const numeroControl = document.getElementById('numero-control');
+            
+            // Función para mostrar mensaje de estado
+            function mostrarMensaje(tipo) {
+                const ahora = new Date();
+                const hora = ahora.toLocaleTimeString('es-MX', {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+                
+                statusMessage.innerHTML = `<p>Registro exitoso: ${tipo} registrada a las ${hora}</p>`;
+                statusMessage.classList.add('active');
+                
+                // Limpiar campo después de registrar
+                numeroControl.value = '';
+                
+                // Ocultar mensaje después de 5 segundos
+                setTimeout(() => {
+                    statusMessage.classList.remove('active');
+                }, 5000);
+            }
+            
+            // Event listeners para los botones
+            entradaBtn.addEventListener('click', function() {
+                if (numeroControl.value.trim() !== '') {
+                    mostrarMensaje('Entrada');
+                } else {
+                    alert('Por favor ingrese su número de control');
+                }
+            });
+            
+            salidaBtn.addEventListener('click', function() {
+                if (numeroControl.value.trim() !== '') {
+                    mostrarMensaje('Salida');
+                } else {
+                    alert('Por favor ingrese su número de control');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
