@@ -36,9 +36,10 @@
                 </div>
                 <!--usuario-->
                 <!--contraseña-->
-                <div class="input-group">
-                    <input type="password" id="password" placeholder="Contraseña" name="password">
+                <div class="input-group password-group">
                     <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                    <input type="password" id="password" placeholder="Contraseña" name="password">
+                    
                 </div>
                 <!--contraseña-->
                 <!--boton de ingreso-->
